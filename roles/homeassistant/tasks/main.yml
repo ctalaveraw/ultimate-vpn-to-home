@@ -1,0 +1,29 @@
+---
+- name: Create Home Assistant Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ homeassistant_data_directory }}/config"
+
+- name: Home Assistant Docker Container
+  docker_container:
+    name: homeassistant
+    image: homeassistant/home-assistant
+    pull: true
+    volumes:
+      - "{{ homeassistant_data_directory }}/config:/config:rw"
+    network_mode: host
+    restart_policy: unless-stopped
+    ports:
+      - "{{ homeassistant_port }}:80"
+    env:
+      TZ: "{{ timezone }}"
+    labels:
+      traefik.enable: "{{ homeassistant_available_externally | string }}"
+      traefik.http.routers.homeassistant.rule: "Host(`{{ homeassistant_hostname }}.{{ root_host }}`)"
+      traefik.http.routers.homeassistant.tls.certresolver: "letsencrypt"
+      traefik.http.routers.homeassistant.tls.domains[0].main: "{{ root_host }}"
+      traefik.http.routers.homeassistant.tls.domains[0].sans: "*.{{ root_host }}"
+      traefik.http.services.homeassistant.loadbalancer.server.port: "{{ homeassistant_port }}"
+  

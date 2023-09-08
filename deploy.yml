@@ -65,7 +65,12 @@
       tags:
         - ssh
 
+    - role: homeassistant
+      tags:
+        - homeassistant
+      when: (pihole_enabled | default(False))
+
     - role: watchtower
       tags:
         - watchtower
-      when: (watchtower_enabled | default(False))  
+      when: (watchtower_enabled | default(False))
