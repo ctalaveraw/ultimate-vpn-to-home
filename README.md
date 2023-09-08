@@ -7,6 +7,9 @@ A simple Ansible deployment that deploys Docker containers that configures a Wir
 * DNS black hole + ad-blocking with `pihole`
 * Dynamic DNS
 * Automated and unattended upgrades
+* **\*Optional*\** Home Assistant for IoT automation
+
+
 
 ## Requirements
 * A Raspberry Pi or other local host running any of the following supported Linux distros:
