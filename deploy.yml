@@ -57,6 +57,16 @@
         - pihole
       when: (pihole_enabled | default(False))
 
+    - role: homeassistant
+      tags:
+        - homeassistant
+      when: (pihole_enabled | default(False))
+
+    - role: nut
+      tags:
+        - nut
+      when: (nut_enabled | default(False))
+
     - role: wireguard
       tags:
         - wireguard
@@ -64,11 +74,6 @@
     - role: ssh
       tags:
         - ssh
-
-    - role: homeassistant
-      tags:
-        - homeassistant
-      when: (pihole_enabled | default(False))
 
     - role: watchtower
       tags:

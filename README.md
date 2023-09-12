@@ -8,7 +8,7 @@ A simple Ansible deployment that deploys Docker containers that configures a Wir
 * Dynamic DNS
 * Automated and unattended upgrades
 * **\*Optional*\** Home Assistant for IoT automation
-
+* **\*Optional*\** NUT (Network UPS Tools) for remote power management
 
 
 ## Requirements

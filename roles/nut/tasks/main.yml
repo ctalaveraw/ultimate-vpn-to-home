@@ -1,0 +1,39 @@
+---
+- name: Create NUT (Network UPS Tools) Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ nut_data_directory }}/config"
+
+- name: Create NUT (Network UPS Tools) Container
+  docker_container:
+    name: "{{ nut_hostname }}"
+    image: instantlinux/nut-upsd
+    pull: true
+    volumes:
+      - "{{ nut_data_directory }}/config:/config:rw"
+    restart_policy: unless-stopped
+    ports:
+      - "{{ nut_port }}"
+    env:
+      TZ: "{{ timezone }}"
+      USER: "{{ nut_hostname }}"
+      GROUP: "{{ nut_hostname }}"
+      API_PASSWORD: "{{ nut_api_user_password }}"
+      API_USER: "upsmon"
+      SERVER: "master"
+      PORT: "auto"
+      NAME: "ups"
+      DRIVER: "usbhid-ups"
+      DESCRIPTION: "{{ ups_description }}"
+      SERIAL: "{{ ups_serial_number }}"
+      VENDORID: "{{ ups_vendor_id }}"
+    privileged: yes
+    labels:
+      traefik.enable: "{{ nut_available_externally | string }}"
+      traefik.http.routers.nut.rule: "Host(`{{ nut_hostname }}.{{ root_host }}`)"
+      traefik.http.routers.nut.tls.certresolver: "letsencrypt"
+      traefik.http.routers.nut.tls.domains[0].main: "{{ root_host }}"
+      traefik.http.routers.nut.tls.domains[0].sans: "*.{{ root_host }}"
+      traefik.http.services.nut.loadbalancer.server.port: "{{ nut_port }}"

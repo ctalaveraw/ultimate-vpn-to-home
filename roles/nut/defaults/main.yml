@@ -1,0 +1,18 @@
+---
+nut_enabled: false
+nut_available_externally: false
+
+# UPS information
+ups_description: "UPS" ## Change to name of UPS
+ups_vendor_id: "0000" ## Change to UPS Vendor ID
+ups_serial_number: "000000000000" ## Change to UPS Serial Number
+
+# Secrets
+nut_api_user_password: "TEST_PASSWORD" ## Be sure to change the password!
+
+# directories
+nut_data_directory: "{{ docker_dir }}/nut"
+
+# network
+nut_hostname: "nut"
+nut_port: "3493"

@@ -80,6 +80,7 @@ extra_packages:
   - tree
   - vim 
   - zsh
+  - python3-docker
 
 ## Wireguard config
 wireguard_enabled: true
@@ -157,4 +158,3 @@ cloudflare_container_name: cloudflare-ddns
 # # the "{{ docker_home }}/traefik" after changing this setting.
 # # traefik_acme_server: "https://acme-staging-v02.api.letsencrypt.org/directory" # staging
 # traefik_acme_server: "https://acme-v02.api.letsencrypt.org/directory" # production
-
